@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build -t amitverma1722/trial-image:latest
+      #If not in the same directory
+      #run: docker build ./api/ -t 
+    - name: Push image to docker hub
+      run: 
+        docker login -u amitverma1722 -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push amitverma1722/trial-image:latest
