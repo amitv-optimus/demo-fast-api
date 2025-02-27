@@ -19,6 +19,6 @@ jobs:
       #If not in the same directory
       #run: docker build ./api/ -t 
     - name: Push image to docker hub
-      run: 
+      run: |
         docker login -u amitverma1722 -p ${{ secrets.DOCKER_HUB_TOKEN }}
         docker push amitverma1722/trial-image:latest
