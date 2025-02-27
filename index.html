@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <script>
+        async function getUserDetails() {
+            const name = document.getElementById("studentName").value.trim(); 
+            const errorMessage = document.getElementById("userDetails");
+            const loader = document.getElementById("loader");
+
+            errorMessage.innerText = "";
+            loader.style.display = "block";
+
+            if (!name) {
+                errorMessage.innerText = "Please enter a student name.";
+                loader.style.display = "none";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/user/${encodeURIComponent(name)}`);
+
+                if (!response.ok) {
+                    throw new Error("User not found");
+                }
+
+                const data = await response.json();
+
+                document.getElementById("fatherName").value = data.father_name || '';
+
+                errorMessage.innerText = "";
+
+            } catch (error) {
+                errorMessage.innerText = error.message || "Error fetching user details!";
+                document.getElementById("fatherName").value = '';
+            } finally {
+                loader.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Information</h1>
+        <input type="text" id="studentName" placeholder="Enter student name" onblur="getUserDetails()">
+        
+        <div class="loader" id="loader" style="display:none;">Loading...</div>
+
+        <input type="text" id="fatherName" placeholder="Father's Name" readonly>
+
+        <p class="error" id="userDetails"></p>  
+    </div>
+</body>
+</html>
