@@ -27,6 +27,6 @@ jobs:
 
     - name: Push Docker image to ACR
       run: |
-        docker push acrforfastapi.azurecr.io/trial-image:${{ github.sha }} -t acrforfastapi.azurecr.io/trial-image:latest .
+        docker push acrforfastapi.azurecr.io/trial-image:${{ github.sha }} -t acrforfastapi.azurecr.io/trial-image:latest
         # Push the newly built image to Azure Container Registry
 
